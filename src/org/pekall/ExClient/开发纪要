@@ -1,0 +1,13 @@
+2012/8/27  16:38
+1. 命令行重启连接异常
+2. 最好支持MIME格式邮件
+3. ClientId重复问题依然存在：正常测试不会出现，可能在异常时，未能将增量写入文件，导致重复。
+4. 结果输出依赖于返回结果的次数，不太可靠。会出现无法输出结果的现象。
+
+支持MIME格式
+    WBXML数据封装问题：
+    5.8.4.6. Opaque Data
+    opaque = OPAQUE length *byte
+    The opaque token (OPAQUE) encodes application-specific data. A length field and zero or more bytes of data follow
+    the token. The length field encodes the number of bytes of data, excluding the OPAQUE token and the length field.
+    OPAQUE mb_u_int32 … bytes …

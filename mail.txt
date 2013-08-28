@@ -1,0 +1,8 @@
+ Date: Thu, 18 Apr 2002 09:32:45 +0800
+From: <mail01@serad.com>
+To: <mail02@serad.com>
+Subject: Test
+Mime-Version: 1.0
+Content-Type: text/plain; charset="iso-8859-1"
+
+ This is a simple mail.
