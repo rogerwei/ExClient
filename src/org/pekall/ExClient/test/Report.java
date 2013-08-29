@@ -28,7 +28,7 @@ public class Report {
         if (TestCounter.getSentOk() == 0)
             return (float)0.0;
 
-        float res = (float)TestCounter.getSent()/TestCounter.getSentOk() * 100;
+        float res = (float)TestCounter.getSentOk()/TestCounter.getSent() * 100;
         BigDecimal b = new BigDecimal(res);
 
         return   b.setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();

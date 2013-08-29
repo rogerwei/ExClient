@@ -22,7 +22,6 @@ public class ExClient {
         //init config
         Configs.init();
         //start console
-        //ClientProxy proxy = new ClientProxy(Configs.getUsers().size());
         Booter booted = new Booter(Configs.getUsers().size());
         UserInterface.setBooter(booted);
         //proxy.start();
@@ -47,10 +46,8 @@ public class ExClient {
                     stop();
                 }else if (res == -5)  {   //start
                     start();
-                    break;
                 }else if (res == -6)  {   //restart
                     restart();
-                    break;
                 }else if (res > 0){
                     sendMail(res);
                 }

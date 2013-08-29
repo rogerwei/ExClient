@@ -45,13 +45,13 @@ public class ParaResponse {
         if (length > 0) {
             //page and first commands
             ByteBuffer byteBuffer = response.getContent().toByteBuffer();
+            setRes(channel.getId());  //get error when send mail,but need to add more
             return getDataAndNext(byteBuffer);
         }else if (length == 0)  {
             setSentOk(channel.getId());
         }
 
-        setRes(channel.getId());
-
+        setRes(channel.getId());   //add more
         return BuildRequest.Type.None;
     }
 

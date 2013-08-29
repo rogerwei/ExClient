@@ -68,6 +68,10 @@ public class RunTime {
         return "";
     }
 
+    public static void initClientId()  {
+        clientId = new BigInteger(Configs.getStartId());
+    }
+
     public static synchronized String getClientId() {
         clientId = clientId.add(new BigInteger("1"));
         return String.valueOf(clientId);

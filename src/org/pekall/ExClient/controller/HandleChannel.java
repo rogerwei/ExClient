@@ -90,4 +90,11 @@ public class HandleChannel {
     public static ChannelGroup activeChannels()  {
         return channels;
     }
+
+    public static void releaseExternalResources() {
+        channels.unbind().awaitUninterruptibly();
+        channels.close().awaitUninterruptibly();
+
+        map.clear();
+    }
 }

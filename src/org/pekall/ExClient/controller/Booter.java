@@ -11,11 +11,9 @@ import org.pekall.ExClient.transport.ClientProxy;
  * 启动、停止、重启
  */
 public class Booter {
-    private int users = 0;
     private ClientProxy proxy;
 
     public Booter(int users)  {
-        this.users = users;
         proxy = new ClientProxy(users);
         start();
     }

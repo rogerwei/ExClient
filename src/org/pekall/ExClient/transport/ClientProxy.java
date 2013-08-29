@@ -18,50 +18,38 @@ import java.util.concurrent.Executors;
  */
 public class ClientProxy {
     private NioClientSocketChannelFactory factory;
-    private List<ClientBootstrap> clients= new ArrayList<ClientBootstrap>();
+    private ClientBootstrap bootstrap1 = null;
     private boolean running = false;
+    private int times = 0;
 
     public ClientProxy(int m)  {
-        Executor executor = Executors.newCachedThreadPool();
-
-        factory = new NioClientSocketChannelFactory(executor, executor);
-
-        int n = m;
-        while(n > 0)  {
-            ClientBootstrap bootstrap = new ClientBootstrap(factory);
-            bootstrap.setPipelineFactory(new PipelineFactory());
-            clients.add(bootstrap);
-            n--;
-        }
-
-        if (m <= 0)  {
-            System.out.println("No Client Bootstrap built!");
-        }
+        times = m;
     }
 
     public void start()  {
-        if (clients.isEmpty() || running)  {
+        if (running)  {
             System.out.println(running? "All Client is Running." : "No Client Bootstrap built!");
             return;
         }
+        Executor executor = Executors.newCachedThreadPool();
 
-        for(ClientBootstrap bootstrap : clients){
-            bootstrap.connect(new InetSocketAddress(Configs.getHost(), Configs.getPort()));
-        }
+        factory = new NioClientSocketChannelFactory(executor, executor);
+        bootstrap1 = new ClientBootstrap(factory);
+        bootstrap1.setPipelineFactory(new PipelineFactory());
+
+        for (int i =0;i < times;i++)
+            bootstrap1.connect(new InetSocketAddress(Configs.getHost(), Configs.getPort()));
+
         running = true;
     }
 
     public void stop() {
-        if (clients.isEmpty() || !running)  {
+        if (!running)  {
             System.out.println(running? "All Client is Stopped." : "No Client Bootstrap built!");
             return;
         }
 
-        for(ClientBootstrap bootstrap : clients){
-            bootstrap.releaseExternalResources();
-        }
-
-        factory.releaseExternalResources();
+        bootstrap1.releaseExternalResources();
         running = false;
     }
 }

@@ -110,14 +110,6 @@ public class Configs {
                 setCaPassword(tmp);
             }
         }
-
-        //[2]
-        //running part
-        clientId = getClientIdValue().toString();
-
-        if (runTimes > 0)  {
-            updateClientId(runTimes);
-        }
     }
 
     private static BigInteger getClientIdValue() {
@@ -134,7 +126,7 @@ public class Configs {
 
     private static void updateClientId(int runTimes) {
         BigInteger init = getClientIdValue();
-        init = init.add(new BigInteger(String.valueOf(runTimes)));
+        init = init.add(new BigInteger(String.valueOf(runTimes * getUsers().size())));
         running.setProperty(ClientId, String.valueOf(init));
 
         //update value
@@ -185,6 +177,13 @@ public class Configs {
     }
 
     public static String getStartId() {
+        //[2]
+        //running part
+        clientId = getClientIdValue().toString();
+        if (runTimes > 0)  {
+            updateClientId(runTimes);
+        }
+
         return clientId;
     }
 

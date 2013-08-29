@@ -34,7 +34,7 @@ public class TestCounter {
     }
 
     public static boolean TestOver()  {
-        return res == (Configs.getRunTimes() * counter.size());
+        return (res > 0) && (res == (Configs.getRunTimes() * counter.size()));
     }
 
     public static void clearTestCounter()  {
