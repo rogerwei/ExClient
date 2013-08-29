@@ -33,10 +33,9 @@ public class TestCounter {
         return false;
     }
 
-    public static boolean TestOver()  {
-        return (res > 0) && (res == (Configs.getRunTimes() * counter.size()));
+    public static boolean isTesting()  {
+        return res > 0;
     }
-
     public static void clearTestCounter()  {
         counter.clear();
         sent = 0x0;
@@ -64,7 +63,9 @@ public class TestCounter {
         if (counter.containsKey(channelId) && counter.get(channelId) > 0)
             res++;
 
-        if (TestOver())
+        if (res > 0 && res == (Configs.getRunTimes() * counter.size()))  {
             report();
+            res = 0;
+        }
     }
 }

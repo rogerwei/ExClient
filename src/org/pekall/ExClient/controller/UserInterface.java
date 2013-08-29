@@ -14,9 +14,10 @@ import static org.pekall.ExClient.controller.TestCounter.*;
 public class UserInterface {
     private static Booter booter;
     public static void sendMail(int times)  {
-        if (TestOver())  {
+        if (!isTesting())  {
             setRumTimes(times);
-            clearStatus();
+            clearTestCounter();
+            initClientId();
             SendRequest.SendMail();
         }else  {
             System.out.println("Your Test is Running.Pls do this test latter.");
@@ -30,7 +31,7 @@ public class UserInterface {
     }
 
     public static void stop()  {
-        if (TestOver())  {
+        if (!isTesting())  {
             if (booter == null)  {
                 System.out.println("Booter is null.Can't controll it.");
             }else  {
@@ -43,7 +44,7 @@ public class UserInterface {
     }
 
     public static void start()  {
-        if (TestOver())  {
+        if (!isTesting())  {
             if (booter == null)  {
                 System.out.println("Booter is null.Can't controll it.");
             }else
@@ -54,7 +55,7 @@ public class UserInterface {
     }
 
     public static void restart()  {
-        if (TestOver())  {
+        if (!isTesting())  {
             if (booter == null)  {
                 System.out.println("Booter is null.Can't controll it.");
             }else  {

@@ -40,6 +40,7 @@ public class ClientProxy {
         for (int i =0;i < times;i++)
             bootstrap1.connect(new InetSocketAddress(Configs.getHost(), Configs.getPort()));
 
+        System.out.println("测试客户端已经启动!");
         running = true;
     }
 
@@ -51,5 +52,6 @@ public class ClientProxy {
 
         bootstrap1.releaseExternalResources();
         running = false;
+        System.out.println("测试客户端已经停止!");
     }
 }
