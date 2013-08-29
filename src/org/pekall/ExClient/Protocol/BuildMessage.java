@@ -11,6 +11,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
 import static java.net.URLEncoder.encode;
+import static org.jboss.netty.util.CharsetUtil.UTF_8;
 import static org.pekall.ExClient.Protocol.MIME.textMail.getMail;
 import static org.pekall.ExClient.Util.GetData.*;
 import static org.pekall.ExClient.configuration.RunTime.*;
@@ -33,7 +34,7 @@ public class BuildMessage {
     }
 
 
-    public String build() {
+    public String build() throws UnsupportedEncodingException {
         if (type.equals(BuildRequest.Type.Options)) {
             return "";
         }
@@ -61,7 +62,7 @@ public class BuildMessage {
 
         return stream.toString();
     }
-    private String buildWBXMLBody() {
+    private String buildWBXMLBody() throws UnsupportedEncodingException {
         switch (type) {
             case Provision:
                 return buildProvisionBody();
@@ -75,7 +76,7 @@ public class BuildMessage {
         }
     }
 
-    private String buildProvisionBody() {
+    private String buildProvisionBody() throws UnsupportedEncodingException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         //Switch Page
         writeSwitchPage(stream, (byte) 0xe);
@@ -122,10 +123,10 @@ public class BuildMessage {
         writeEnd(stream);
         //Provision end
         writeEnd(stream);
-        return stream.toString();
+        return stream.toString("utf-8");
     }
 
-    private String buildAckProvisionBody() {
+    private String buildAckProvisionBody() throws UnsupportedEncodingException {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         //Switch Page
         writeSwitchPage(stream, (byte) 0xe);
@@ -157,10 +158,10 @@ public class BuildMessage {
         //end Provision
         writeEnd(stream);
 
-        return stream.toString();
+        return stream.toString("utf-8");
     }
 
-    private String buildSendMailBody() {
+    private String buildSendMailBody() throws UnsupportedEncodingException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         //Switch Page
         writeSwitchPage(outputStream, (byte)0x15);
@@ -177,9 +178,9 @@ public class BuildMessage {
         outputStream.write((byte)0x50);
 
         String tmp = getMail();
-        outputStream.write((byte)0xc3);
+        outputStream.write(0xc3);
         try {
-            outputStream.write(getOqaqueTypeLength2(tmp.getBytes(Charset.defaultCharset()).length));
+            outputStream.write(getOqaqueTypeLength(tmp.getBytes(UTF_8).length));
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -195,7 +196,7 @@ public class BuildMessage {
         //SendMail end
         writeEnd(outputStream);
 
-        return new String(outputStream.toByteArray());  //To change body of created methods use File | Settings | File Templates.
+        return outputStream.toString("utf-8");
     }
 
     private void writeDataStart(ByteArrayOutputStream outputStream) {

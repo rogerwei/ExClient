@@ -7,6 +7,7 @@ import org.jboss.netty.util.CharsetUtil;
 import org.pekall.ExClient.Util.Base64;
 import org.pekall.ExClient.configuration.Configs;
 
+import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 
 import static org.pekall.ExClient.controller.HandleChannel.getAuth;
@@ -33,7 +34,13 @@ public class BuildRequest {
         if (type == Type.None)
             return null;
 
-        String message = new BuildMessage(type, getUser(channel)).build();
+        String message = null;
+        try {
+            message = new BuildMessage(type, getUser(channel)).build();
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("在组织消息体时，遇到错误：");
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.Sy
+        }
 
         int length = message.getBytes(CharsetUtil.UTF_8).length;
 

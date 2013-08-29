@@ -16,28 +16,7 @@ public class GetData {
         return data;
     }
 
-    public static String getOqaqueTypeLength(int len) {
-        String iReturn = "";
-        byte[] bytes = new byte[4];
-        int i = 0;
-
-        do {  //covert into bytes
-            byte data = (byte)(len & 0x7f);
-            len >>=7;
-            if (i > 0)
-                data += (byte)0x80;
-            bytes[i] = data;
-            i++;
-        } while (len > 0);
-
-        for (i--; i >=0;i --)  {  //rollback
-            iReturn += (char)(bytes[i] & 0xff);
-        }
-
-        return iReturn;
-    }
-
-    public static byte[] getOqaqueTypeLength2(int len) {
+    public static byte[] getOqaqueTypeLength(int len) {
         byte[] bytes = new byte[4];
         int i = 0;
 
